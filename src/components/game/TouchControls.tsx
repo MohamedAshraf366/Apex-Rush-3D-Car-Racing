@@ -5,20 +5,23 @@ import type { RaceState } from "./types";
 
 function TouchBtn({
   label,
+  ariaLabel,
   onPointerDown,
   onPointerUp,
 }: {
   label: string;
+  ariaLabel: string;
   onPointerDown: (e: ReactPointerEvent) => void;
   onPointerUp: () => void;
 }) {
   return (
     <button
+      aria-label={ariaLabel}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerLeave={onPointerUp}
       onPointerCancel={onPointerUp}
-      className="flex h-16 w-16 touch-none select-none items-center justify-center rounded-full bg-black/40 text-xl font-black text-white ring-1 ring-white/25 backdrop-blur-sm active:bg-white/25"
+      className="flex h-16 w-16 touch-none select-none items-center justify-center rounded-full bg-black/40 text-2xl font-black leading-none text-white ring-1 ring-white/25 backdrop-blur-sm active:bg-white/25"
     >
       {label}
     </button>
@@ -67,6 +70,7 @@ export function TouchControls({ raceRef }: { raceRef: RefObject<RaceState | null
       <div className="pointer-events-auto absolute bottom-5 left-4 flex gap-3">
         <TouchBtn
           label="◀"
+          ariaLabel="Steer left"
           onPointerDown={(e) => {
             capturePointer(e);
             setHeld("l", true);
@@ -75,6 +79,7 @@ export function TouchControls({ raceRef }: { raceRef: RefObject<RaceState | null
         />
         <TouchBtn
           label="▶"
+          ariaLabel="Steer right"
           onPointerDown={(e) => {
             capturePointer(e);
             setHeld("r", true);
@@ -84,7 +89,8 @@ export function TouchControls({ raceRef }: { raceRef: RefObject<RaceState | null
       </div>
       <div className="pointer-events-auto absolute bottom-5 right-4 flex items-end gap-3">
         <TouchBtn
-          label="⛔"
+          label="▼"
+          ariaLabel="Brake and reverse"
           onPointerDown={(e) => {
             capturePointer(e);
             setBrake(true);
@@ -92,7 +98,8 @@ export function TouchControls({ raceRef }: { raceRef: RefObject<RaceState | null
           onPointerUp={() => setBrake(false)}
         />
         <TouchBtn
-          label="⏱"
+          label="▲"
+          ariaLabel="Accelerate"
           onPointerDown={(e) => {
             capturePointer(e);
             setThrottle(true);
